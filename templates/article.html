@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    {% if article.tags %}
+    <meta name="keywords" content="{{ article.tags|join(",") }}" />
+    {% endif %}
+    {% if article.description %}
+    <meta name="description" content="{{ article.description }}" />
+    {% endif %}
+{% endblock %}
+
+{% block title %}{{ SITENAME }} | {{ article.title }}{% endblock %}
+
+{% block content %}
+<main>
+    {% if article.images is defined %}
+    <div id="imageShow">
+        {% for image in article.images %}
+        <div class="image" data-index="{{loop.index}}" style="background-image: url({{image}});{% if not loop.index == 1 %} display: none;{% endif %}"></div>
+        {% endfor %}
+        <div class="prev handler"><span></span>&lt;</div>
+        <div class="next handler"><span></span>&gt;</div>
+        <div class="loader"><p><span></span></p></div>
+        <p class="desc imgcounter">
+            <span>Bild <i class="act">1</i> von <i class="all">{{article.images|length}}</i></span>
+        </p>
+    </div>
+    {% endif %}
+    <div class="box">
+        <a class="back" href="javascript:void(0);" onclick="history.back();"><span>&lt;</span> Zurück zur vorherigen Seite</a>
+        {% include "article_stub.html" %}
+    </div>
+</main>
+{% endblock %}

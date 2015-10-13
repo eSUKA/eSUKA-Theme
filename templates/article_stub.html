@@ -1,0 +1,35 @@
+<article class="shown post category_{% if article.subcategory is defined %}{{article.subcategory}}{% else %}general{% endif %}">
+    {% if article.title %}
+    <h2 class="title">
+        {% if article.category == "Event" %}
+            {% if article.start_date.strftime is defined and article.end_date.strftime is defined %}
+                <span class="date">
+                    {{ article.start_date | strftime("%d. %b %Y") }}
+                     - {{ article.end_date | strftime("%d. %b %Y") }}
+                </span>
+            {% elif article.start_date.strftime is defined %}
+                <span class="date">
+                    {{ article.start_date | strftime("%d. %b %Y") }}
+                </span>
+            {% else %}
+                <span class="date">{{ article.date | strftime("%d. %b %Y") }}</span>
+            {% endif %}
+        {% else %}
+            <span class="date">{{ article.date | strftime("%d. %b %Y") }}</span>
+        {% endif %}
+        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permanent Link to &quot;{{ article.title }}&quot;">{{ article.title }}</a>
+    </h2>
+    {% endif %}
+    <div class="article">
+        {% if output_file == "index.html" %}
+        {{ article.summary }}
+        <p><a href="{{ SITEURL }}/{{ article.url }}" title="Permanent Link to &quot;{{ article.title }}&quot;">Den ganzen Artikel lesen</a></p>
+        {% elif category_list %}
+        {{ article.summary }}
+        <p><a href="{{ SITEURL }}/{{ article.url }}" title="Permanent Link to &quot;{{ article.title }}&quot;">Den ganzen Artikel lesen</a></p>
+        {% else %}
+        {{ article.content }}
+        {% endif %}
+    </div>
+    <hr>
+</article>

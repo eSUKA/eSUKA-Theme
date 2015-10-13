@@ -1,0 +1,27 @@
+<h4 class="date">{{ article.start_date | strftime(" %d. %b %Y") }}</h4>
+{% if article.end_date %}
+<!-- <h4 class="date">-</h4> -->
+<!-- <h4 class="date">{{ article.end_date | strftime(" %d. %b %Y") }}</h4> -->
+{% endif %}
+<article class="post category_{{article.game}}">
+    {% if article.title %}
+    <h2 class="title">
+        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permanent Link to &quot;{{ article.title }}&quot;">{{ article.title }}</a>
+    </h2>
+    {% endif %}
+    <div class="article">
+    {% if output_file == "index.html" %}
+        {{ article.summary }}
+    {% elif category_list %}
+        {{ article.summary }}
+    {% else %}
+        {{ article.content }}
+    {% endif %}
+    </div>
+    <div class="clear"></div>
+    <div class="info">
+        {% if article.modified %}
+        <a href="{{ SITEURL }}/{{ article.url }}">Zuletzt geändert am {{ article.modified.strftime("%d. %B %Y") }}</a>
+            {% endif %}
+    </div>
+</article>

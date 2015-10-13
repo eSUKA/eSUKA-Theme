@@ -1,0 +1,52 @@
+{% extends "page.html" %}
+{% set innerPage = True %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+{% if output_file == 'index.html' %}
+    <div id="imageShow">
+        <div class="image" style="background-image: url({{SITEURL}}/{% if articles[0].teaser is defined %}{{articles[0].teaser}}{% else %}teaser_default.jpg{% endif %});">
+            {% if articles[0].teaser_description is defined %}
+            <p class="desc">
+                <span>{{articles[0].teaser_description}}</span>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+<div id="sidebar">
+    <div class="box">
+        <input type="text" id="searchbar" onkeyup="searchNews()" placeholder="In News suchen" style="height: 20px; padding: 6px; font-size: 16px; color: #fff; border: 1px solid #222; background: #090909; width: 234px; margin-top: 4px;" />
+        <hr/>
+        <h3>News filtern</h3>
+        <div class="checkbox checked all" data-handler="filterNews" data-class="all"><a></a><span>Alle</span></div>
+        <div class="checkbox checked" data-handler="filterNews" data-class="general"><a></a><span>Allgemeines <img src="{{SITEURL}}/theme/img/category_general.png" /></span></div>
+        <div class="checkbox checked" data-handler="filterNews" data-class="dota"><a></a><span>Dota 2 <img src="{{SITEURL}}/theme/img/category_dota.png" /></span></div>
+        <div class="checkbox checked" data-handler="filterNews" data-class="league"><a></a><span>League of Legends <img src="{{SITEURL}}/theme/img/category_league.png" /></span></div>
+        <div class="checkbox checked" data-handler="filterNews" data-class="csgo"><a></a><span>Counter-Strike: GO <img src="{{SITEURL}}/theme/img/category_csgo.png" /></span></div>
+        <div class="checkbox checked" data-handler="filterNews" data-class="hearthstone"><a></a><span>Hearthstone <img src="{{SITEURL}}/theme/img/category_hearthstone.png" /></span></div>
+    </div>
+</div>
+<main>
+    <div class="box sidebar list">
+        {{ super() }}
+
+        {% set category_list = True %}
+        {% for article in articles %}
+        {%   if output_file == "index.html" and article.category == "News" %}
+        {%     include "article_stub.html" %}
+        {%   elif page is defined and article.category == page.category %}
+        {%     include "article_stub.html" %}
+        {%   endif %}
+        {% endfor %}
+
+        <article class="post nomore" style="display: none;">
+            <div class="article"><i>Leider sind keine Artikel vorhanden, die Ihrer Suche entsprechen.</i></div>
+        </article>
+    </div>
+</main>
+{% endblock %}

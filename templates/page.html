@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }}{% if page is defined %} | {{ page.title }}{% endif %}{% endblock %}
+
+{% block content %}
+    {% if not (innerPage is defined and innerPage == True) %}
+    <main>
+        <div class="box">
+    {% endif %}
+    {% if page is defined %}
+        <div class="shown">
+            <h1 class="pagetitle"{% if page.header is defined %} style="background-image: url({{page.header}});"{% endif %}>{{ page.title }}</h1>
+            <div class="article">{{ page.content }}</div>
+            <hr>
+        </div>
+    {% endif %}
+    {% if not (innerPage is defined and innerPage == True) %}
+        </div>
+    </main>
+    {% endif %}
+{% endblock %}
