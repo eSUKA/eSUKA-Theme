@@ -37,10 +37,12 @@
 
         {% set category_list = True %}
         {% for article in articles %}
-        {%   if output_file == "index.html" and article.category == "News" %}
-        {%     include "article_stub.html" %}
-        {%   elif page is defined and article.category == page.category %}
-        {%     include "article_stub.html" %}
+        {%   if not article.status is defined or article.status !=  "Draft" %}
+        {%     if output_file == "index.html" and article.category == "News" %}
+        {%       include "article_stub.html" %}
+        {%     elif page is defined and article.category == page.category %}
+        {%       include "article_stub.html" %}
+        {%     endif %}
         {%   endif %}
         {% endfor %}
 
