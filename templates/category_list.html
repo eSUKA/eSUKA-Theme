@@ -9,7 +9,7 @@
 {% block content %}
 {% if output_file == 'index.html' %}
     <div id="imageShow">
-        <div class="image" style="background-image: url({{SITEURL}}/{% if articles[0].teaser is defined %}{{articles[0].teaser}}{% else %}teaser_default.jpg{% endif %});">
+        <div class="image" style="background-image: url({{SITEURL}}/{% if articles[0].teaser is defined %}{{articles[0].teaser}}{% else %}images/teaser_default.jpg{% endif %});">
             {% if articles[0].teaser_description is defined %}
             <p class="desc">
                 <span>{{articles[0].teaser_description}}</span>
