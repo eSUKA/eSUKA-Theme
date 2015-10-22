@@ -9,9 +9,14 @@
 {% block content %}
 {% if output_file == 'index.html' %}
     <div id="imageShow">
-        {% set article = (articles|selectattr('status', 'equalto', 'published')|selectattr('category', 'equalto', 'News')|first) %}
-        <div class="image" style="background-image: url({{SITEURL}}/{% if article.teaser is defined %}{{article.teaser}}{% else %}theme/img/teaser_default.jpg{% endif %});">
-            {% if article.teaser_description is defined %}
+        {% for article in articles %}
+        {%   if article.category|string() is equalto "News"|string() %}
+        {%     set teaserArticle = article %}
+        {%     break %}
+        {%   endif %}
+        {% endfor %}
+        <div class="image" style="background-image: url({{SITEURL}}/{% if (teaserArticle is defined) and (teaserArticle.teaser is defined) %}{{article.teaser}}{% else %}theme/img/teaser_default.jpg{% endif %});">
+            {% if (teaserArticle is defined) and (teaserArticle.teaser_description is defined) %}
             <p class="desc">
                 <span>{{article.teaser_description}}</span>
             </p>
