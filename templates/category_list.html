@@ -53,8 +53,8 @@
         {%   endif %}
         {% endif %}
         {% for article in articles %}
-        {%   if not article.status is defined or article.status !=  "Draft" %}
-        {%     if output_file == "index.html" and article.category == "News" %}
+        {%   if not article.status is defined or not article.status|string() is equalto "Draft"|string() %}
+        {%     if (output_file|string() is equalto "index.html"|string()) and (article.category|string() is equalto "News"|string()) %}
         {%       include "article_stub.html" %}
         {%     elif page is defined and article.category == page.category %}
         {%       include "article_stub.html" %}
