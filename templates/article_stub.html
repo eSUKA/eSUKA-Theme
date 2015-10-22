@@ -23,10 +23,14 @@
     <div class="article">
         {% if output_file == "index.html" %}
         {{ article.summary }}
-        <p><a href="{{ SITEURL }}/{{ article.url }}" title="Permanent Link to &quot;{{ article.title }}&quot;">Den ganzen Artikel lesen</a></p>
+        {%   if not article.summary is equalto article.content %}
+            <p><a href="{{ SITEURL }}/{{ article.url }}" title="Permanent Link to &quot;{{ article.title }}&quot;">Den ganzen Artikel lesen</a></p>
+        {%   endif %}
         {% elif category_list %}
         {{ article.summary }}
-        <p><a href="{{ SITEURL }}/{{ article.url }}" title="Permanent Link to &quot;{{ article.title }}&quot;">Den ganzen Artikel lesen</a></p>
+        {%   if not article.summary is equalto article.content %}
+            <p><a href="{{ SITEURL }}/{{ article.url }}" title="Permanent Link to &quot;{{ article.title }}&quot;">Den ganzen Artikel lesen</a></p>
+        {%   endif %}
         {% else %}
         {{ article.content }}
         {% endif %}

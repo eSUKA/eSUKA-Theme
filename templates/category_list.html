@@ -9,10 +9,11 @@
 {% block content %}
 {% if output_file == 'index.html' %}
     <div id="imageShow">
-        <div class="image" style="background-image: url({{SITEURL}}/{% if articles[0].teaser is defined %}{{articles[0].teaser}}{% else %}teaser_default.jpg{% endif %});">
-            {% if articles[0].teaser_description is defined %}
+        {% set article = (articles|selectattr('status', 'equalto', 'published')|selectattr('category', 'equalto', 'news')|first) %}
+        <div class="image" style="background-image: url({{SITEURL}}/{% if article.teaser is defined %}{{article.teaser}}{% else %}theme/img/teaser_default.jpg{% endif %});">
+            {% if article.teaser_description is defined %}
             <p class="desc">
-                <span>{{articles[0].teaser_description}}</span>
+                <span>{{article.teaser_description}}</span>
             </p>
             {% endif %}
         </div>
@@ -36,6 +37,21 @@
         {{ super() }}
 
         {% set category_list = True %}
+        {% if page is defined %}
+        {%   if page.sort is defined and page.sort == "reverse" %}
+        {%     set articles = (articles|reverse) %}
+        {%   endif %}
+        {%   if page.filters is defined %}
+        {%     for filter in page.filters %}
+        {%       set filter = filter.split(" ") %}
+        {%       if filter[2] is defined %}
+        {%         set articles = (articles|selectattr(filter[0], filter[1], filter[2])) %}
+        {%       else %}
+        {%         set articles = (articles|selectattr(filter[0], filter[1])) %}
+        {%       endif %}
+        {%     endfor %}
+        {%   endif %}
+        {% endif %}
         {% for article in articles %}
         {%   if not article.status is defined or article.status !=  "Draft" %}
         {%     if output_file == "index.html" and article.category == "News" %}
