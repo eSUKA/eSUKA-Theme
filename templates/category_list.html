@@ -9,10 +9,9 @@
 {% block content %}
 {% if output_file == 'index.html' %}
     <div id="imageShow">
-        {% for article in articles %}
+        {% for article in articles|reverse %}
         {%   if article.category|string() is equalto "News"|string() %}
         {%     set teaserArticle = article %}
-        {%     break %}
         {%   endif %}
         {% endfor %}
         <div class="image" style="background-image: url({{SITEURL}}/{% if (teaserArticle is defined) and (teaserArticle.teaser is defined) %}{{article.teaser}}{% else %}theme/img/teaser_default.jpg{% endif %});">
