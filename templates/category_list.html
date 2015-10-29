@@ -9,8 +9,8 @@
 {% block content %}
 {% if output_file == 'index.html' %}
     <div id="imageShow">
-        <!--{% set article = (articles|selectattr('status', 'equalto', 'published')|selectattr('category', 'equalto', 'News')|first)  %}-->
-        {% set article = {} %}
+        {% set article = (articles|selectattr('status', 'equalto', 'published')|selectattr('category', 'equalto', 'News')|first)  %}
+        <!--{% set article = {} %}
         <div class="image" style="background-image: url({{SITEURL}}/{% if article.teaser is defined %}{{article.teaser}}{% else %}theme/img/teaser_default.jpg{% endif %});">
             {% if article.teaser_description is defined %}
             <p class="desc">
